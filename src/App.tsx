@@ -1,8 +1,8 @@
 import { Suspense, lazy } from 'react'
 import { NavLink, Route, Routes } from 'react-router-dom'
 
-const Home = lazy(() => import('./pages/Home'))
-const About = lazy(() => import('./pages/About'))
+const Home = lazy(() => import('./pages/Home').then(({ Home }) => ({ default: Home })))
+const About = lazy(() => import('./pages/About').then(({ About }) => ({ default: About })))
 
 const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
   [
@@ -81,4 +81,4 @@ const App = () => {
   )
 }
 
-export default App
+export { App }

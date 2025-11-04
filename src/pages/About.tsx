@@ -40,4 +40,4 @@ const About = () => (
   </section>
 )
 
-export default About
+export { About }

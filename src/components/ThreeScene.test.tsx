@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { vi } from 'vitest'
-import ThreeScene from './ThreeScene'
+import { ThreeScene } from './ThreeScene'
 
 describe('ThreeScene accessibility', () => {
   it('announces a fallback message when WebGL cannot initialize', () => {

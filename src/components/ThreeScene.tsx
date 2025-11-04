@@ -230,4 +230,4 @@ const ThreeScene = ({
   )
 }
 
-export default ThreeScene
+export { ThreeScene }

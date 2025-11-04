@@ -1,7 +1,7 @@
 import { Suspense, lazy } from 'react'
 import { Link } from 'react-router-dom'
 
-const ThreeScene = lazy(() => import('../components/ThreeScene'))
+const ThreeScene = lazy(() => import('../components/ThreeScene').then(({ ThreeScene }) => ({ default: ThreeScene })))
 
 const features = [
   {
@@ -97,4 +97,4 @@ const Home = () => (
   </div>
 )
 
-export default Home
+export { Home }
