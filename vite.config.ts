@@ -1,25 +1,34 @@
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
+import { loadEnv } from 'vite';
+// import fs from "fs"; // Uncomment this line to enable HTTPS with self-signed certificates
 
 // https://vite.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  build: {
-    chunkSizeWarningLimit: 900,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          three: ['three'],
+export default defineConfig(({ mode }) => {
+   // Load environment variables so we can read VITE_BASE when building for GitHub Pages
+  const env =   loadEnv(mode, process.cwd(), "");
+  const base = env.VITE_BASE || "./";
+  return {
+    plugins: [react()],
+    base: base,
+    build: {
+      chunkSizeWarningLimit: 900,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            three: ['three'],
+          },
         },
       },
     },
-  },
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: './src/setupTests.ts',
-    coverage: {
-      reporter: ['text', 'json-summary'],
-    },
-  },
+    test: {
+      globals: true,
+      environment: 'jsdom',
+      setupFiles: './src/setupTests.ts',
+      coverage: {
+        reporter: ['text', 'json-summary'],
+      },
+    }
+  };
 })
+
