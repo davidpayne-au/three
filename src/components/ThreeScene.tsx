@@ -1,4 +1,5 @@
 import { useEffect, useRef, type ComponentPropsWithoutRef } from 'react'
+import { useTheme } from '../hooks/useTheme'
 
 type ThreeSceneProps = ComponentPropsWithoutRef<'div'>
 
@@ -35,6 +36,7 @@ const ThreeScene = ({
   ...rest
 }: ThreeSceneProps) => {
   const mountRef = useRef<HTMLDivElement | null>(null)
+  const { theme } = useTheme()
 
   useEffect(() => {
     const mount = mountRef.current
@@ -128,18 +130,26 @@ const ThreeScene = ({
 
       floor = new THREE.LineSegments(
         new THREE.WireframeGeometry(new THREE.PlaneGeometry(6, 6, 12, 12)),
-        new THREE.LineBasicMaterial({ color: '#1d4ed8', transparent: true, opacity: 0.2 }),
+        new THREE.LineBasicMaterial({
+          color: theme === 'light' ? '#64748b' : '#1d4ed8',
+          transparent: true,
+          opacity: 0.2
+        }),
       )
       floor.rotation.x = -Math.PI / 2
       floor.position.y = -1.8
       scene.add(floor)
 
-      const ambient = new THREE.HemisphereLight('#dbeafe', '#020617', 0.8)
-      const keyLight = new THREE.PointLight('#38bdf8', 35, 0, 2)
+      const ambient = new THREE.HemisphereLight(
+        theme === 'light' ? '#ffffff' : '#dbeafe',
+        theme === 'light' ? '#f1f5f9' : '#020617',
+        0.8
+      )
+      const keyLight = new THREE.PointLight(theme === 'light' ? '#3b82f6' : '#38bdf8', 35, 0, 2)
       keyLight.position.set(4, 4, 5)
-      const rimLight = new THREE.DirectionalLight('#f472b6', 4)
+      const rimLight = new THREE.DirectionalLight(theme === 'light' ? '#ec4899' : '#f472b6', 4)
       rimLight.position.set(-4, 3, 1)
-      const fillLight = new THREE.PointLight('#fef3c7', 15, 0, 2)
+      const fillLight = new THREE.PointLight(theme === 'light' ? '#fbbf24' : '#fef3c7', 15, 0, 2)
       fillLight.position.set(0, 2.5, -3)
       scene.add(ambient, keyLight, rimLight, fillLight)
 
@@ -209,7 +219,7 @@ const ThreeScene = ({
       camera = null
       renderer = null
     }
-  }, [])
+  }, [theme])
 
   const classes = [
     'relative h-72 w-full overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-slate-900/80 via-slate-950 to-black shadow-2xl shadow-cyan-500/30 md:h-96',

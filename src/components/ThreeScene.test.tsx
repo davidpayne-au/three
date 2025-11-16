@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { vi } from 'vitest'
+import { ThemeProvider } from '../contexts/ThemeContext'
 import { ThreeScene } from './ThreeScene'
 
 describe('ThreeScene accessibility', () => {
@@ -8,7 +9,11 @@ describe('ThreeScene accessibility', () => {
       .spyOn(HTMLCanvasElement.prototype, 'getContext')
       .mockImplementation(() => null)
 
-    render(<ThreeScene />)
+    render(
+      <ThemeProvider>
+        <ThreeScene />
+      </ThemeProvider>
+    )
 
     const statusMessage = screen.getByRole('status')
     expect(statusMessage).toHaveTextContent(/webgl preview unavailable/i)

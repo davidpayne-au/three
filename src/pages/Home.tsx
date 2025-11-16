@@ -29,14 +29,14 @@ const Home = () => (
         <p className="inline-flex items-center rounded-full border border-brand/40 bg-brand/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-brand">
           3D • React • Tailwind
         </p>
-        <h2 id={heroHeadingId} className="text-4xl font-semibold leading-tight text-white sm:text-5xl">
+        <h2 id={heroHeadingId} className="text-4xl font-semibold leading-tight text-slate-900 dark:text-white sm:text-5xl">
           Build immersive experiences with a minimal Three.js starter.
         </h2>
-        <p className="text-lg text-slate-200">
+        <p className="text-lg text-slate-700 dark:text-slate-200">
           This demo wires together Vite, React Router, Tailwind, and a handcrafted Three.js scene.
           Use it as a foundation for data visualizations, product try-ons, or any GL-backed UI.
         </p>
-        <p id={ctaDescriptionId} className="text-sm text-slate-300">
+        <p id={ctaDescriptionId} className="text-sm text-slate-600 dark:text-slate-300">
           Primary actions use a 4.5:1 contrast ratio and retain visible outlines for keyboard users.
         </p>
         <div className="flex flex-wrap gap-3">
@@ -85,12 +85,12 @@ const Home = () => (
       {features.map((feature) => (
         <div
           key={feature.title}
-          className="rounded-3xl border border-white/10 bg-white/10 p-6 text-slate-50 shadow-lg shadow-slate-900/40"
+          className="rounded-3xl border border-slate-200 bg-slate-50 p-6 text-slate-900 shadow-lg shadow-slate-900/10 dark:border-white/10 dark:bg-white/10 dark:text-slate-50 dark:shadow-slate-900/40"
         >
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-brand">
             {feature.title}
           </p>
-          <p className="mt-3 text-sm text-slate-200">{feature.copy}</p>
+          <p className="mt-3 text-sm text-slate-600 dark:text-slate-200">{feature.copy}</p>
         </div>
       ))}
     </section>

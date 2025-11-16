@@ -1,5 +1,6 @@
 import { Suspense, lazy } from 'react'
 import { NavLink, Route, Routes } from 'react-router-dom'
+import { ThemeToggle } from './components/ThemeToggle'
 
 const Home = lazy(() => import('./pages/Home').then(({ Home }) => ({ default: Home })))
 const About = lazy(() => import('./pages/About').then(({ About }) => ({ default: About })))
@@ -7,7 +8,9 @@ const About = lazy(() => import('./pages/About').then(({ About }) => ({ default:
 const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
   [
     'rounded-full px-4 py-1.5 text-sm font-semibold transition-colors',
-    isActive ? 'bg-white text-slate-900' : 'text-slate-300 hover:text-white',
+    isActive
+      ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900'
+      : 'text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white',
   ].join(' ')
 
 const App = () => {
@@ -22,32 +25,35 @@ const App = () => {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
+    <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100">
       <a className="skip-link" href="#main-content" onClick={handleSkipToContent}>
         Skip to main content
       </a>
       <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-4 py-8 sm:px-8">
-        <header className="mb-10 flex flex-wrap items-center justify-between gap-6 border-b border-white/5 pb-6">
+        <header className="mb-10 flex flex-wrap items-center justify-between gap-6 border-b border-slate-200 pb-6 dark:border-white/5">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">
+          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500 dark:text-slate-500">
             Three Demo
           </p>
           <h1 className="text-3xl font-bold">ThreeJS Explorer</h1>
-          <p className="text-sm text-slate-400">
+          <p className="text-sm text-slate-600 dark:text-slate-400">
             React + Vite + Tailwind with a hash-based router for static hosting.
           </p>
         </div>
-        <nav
-          aria-label="Primary navigation"
-          className="flex gap-2 rounded-full border border-white/10 bg-white/5 p-1 backdrop-blur"
-        >
-          <NavLink to="/" end className={navLinkClasses}>
-            Home
-          </NavLink>
-          <NavLink to="/about" className={navLinkClasses}>
-            About
-          </NavLink>
-        </nav>
+        <div className="flex items-center gap-4">
+          <nav
+            aria-label="Primary navigation"
+            className="flex gap-2 rounded-full border border-slate-200 bg-slate-50 p-1 backdrop-blur dark:border-white/10 dark:bg-white/5"
+          >
+            <NavLink to="/" end className={navLinkClasses}>
+              Home
+            </NavLink>
+            <NavLink to="/about" className={navLinkClasses}>
+              About
+            </NavLink>
+          </nav>
+          <ThemeToggle />
+        </div>
       </header>
 
         <main
@@ -60,7 +66,7 @@ const App = () => {
               <div
                 role="status"
                 aria-live="polite"
-                className="flex min-h-[40vh] items-center justify-center rounded-3xl border border-white/10 bg-white/5 text-sm text-slate-200"
+                className="flex min-h-[40vh] items-center justify-center rounded-3xl border border-slate-200 bg-slate-50 text-sm text-slate-700 dark:border-white/10 dark:bg-white/5 dark:text-slate-200"
               >
                 Loading section…
               </div>
@@ -73,7 +79,7 @@ const App = () => {
           </Suspense>
         </main>
 
-        <footer className="mt-12 text-center text-xs text-slate-500">
+        <footer className="mt-12 text-center text-xs text-slate-500 dark:text-slate-500">
           Built with React 19, Vite, Tailwind, and Three.js.
         </footer>
       </div>

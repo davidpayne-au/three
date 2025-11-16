@@ -1,14 +1,24 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { MemoryRouter } from 'react-router-dom'
+import { ThemeProvider } from '../contexts/ThemeContext'
 import { App } from '../App'
+
+// Test wrapper component
+const TestWrapper = ({ children, initialEntries = ['/'] }: { children: React.ReactNode, initialEntries?: string[] }) => (
+  <ThemeProvider>
+    <MemoryRouter initialEntries={initialEntries}>
+      {children}
+    </MemoryRouter>
+  </ThemeProvider>
+)
 
 describe('App routing', () => {
   it('renders the home hero by default', async () => {
     render(
-      <MemoryRouter initialEntries={['/']}>
+      <TestWrapper>
         <App />
-      </MemoryRouter>,
+      </TestWrapper>,
     )
 
     expect(screen.getByText(/ThreeJS Explorer/i)).toBeInTheDocument()
@@ -20,9 +30,9 @@ describe('App routing', () => {
   it('navigates to the About page when requested', async () => {
     const user = userEvent.setup()
     render(
-      <MemoryRouter initialEntries={['/']}>
+      <TestWrapper initialEntries={['/']}>
         <App />
-      </MemoryRouter>,
+      </TestWrapper>,
     )
 
     await user.click(screen.getByRole('link', { name: /about/i }))
@@ -36,9 +46,9 @@ describe('Accessibility affordances', () => {
   it('offers a skip link that moves focus to the main region', async () => {
     const user = userEvent.setup()
     render(
-      <MemoryRouter initialEntries={['/']}>
+      <TestWrapper>
         <App />
-      </MemoryRouter>,
+      </TestWrapper>,
     )
 
     await user.tab()
@@ -50,9 +60,9 @@ describe('Accessibility affordances', () => {
 
   it('labels the hero Three.js scene with supporting description text', async () => {
     render(
-      <MemoryRouter initialEntries={['/']}>
+      <TestWrapper>
         <App />
-      </MemoryRouter>,
+      </TestWrapper>,
     )
 
     const scene = await screen.findByRole('img', { name: /luminous/i })
