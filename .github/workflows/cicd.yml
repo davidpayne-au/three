@@ -58,13 +58,23 @@ jobs:
           echo "📚 **Live Preview:** [$DEPLOYED_URL]($DEPLOYED_URL)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "✅ Build, test, and deployment completed successfully!" >> $GITHUB_STEP_SUMMARY
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 
     # run e2e tests using playwright
     # - name: Install Playwright Browsers
     #   run: npx playwright install --with-deps
     # - name: Run e2e tests
     #   run: |
-    #     echo "📣 PVT: Running e2e tests against deployed pages at ${{ steps.deploy-pages-artifact.outputs.page_url }}" | tee -a $GITHUB_STEP_SUMMARY
+    #     echo "📣 PVT: Running e2e tests against deployed pages at ${{ steps.deployment.outputs.page_url }}" | tee -a $GITHUB_STEP_SUMMARY
     #     if [ "${{ env.PAUSE_BEFORE_E2E }}" = "true" ]; then
     #       echo "⏳ Waiting for ${{ env.PAUSE_BEFORE_E2E_SECONDS }} seconds before running e2e tests" | tee -a $GITHUB_STEP_SUMMARY
     #       sleep ${{ env.PAUSE_BEFORE_E2E_SECONDS }}
@@ -72,7 +82,7 @@ jobs:
     #     echo "🧪 Running e2e tests" | tee -a $GITHUB_STEP_SUMMARY
     #     npm run test:e2e
     #   env:
-    #     BASE_URL: ${{ steps.deploy-pages-artifact.outputs.page_url }} # set the base URL for the e2e tests
+    #     BASE_URL: ${{ steps.deployment.outputs.page_url }} # set the base URL for the e2e tests
 
     # - name: Upload screenshots as artifact
     #   if: github.event_name == 'pull_request' || github.event_name == 'push'
