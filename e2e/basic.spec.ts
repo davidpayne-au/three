@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test('has title and links to about page', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('./');
 
   // Check for the main heading
   await expect(page.getByRole('heading', { name: 'Build immersive experiences with a minimal Three.js starter.' })).toBeVisible();
