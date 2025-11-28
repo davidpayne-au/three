@@ -42,7 +42,7 @@ const Home = () => (
         <div className="flex flex-wrap gap-3">
           <Link
             to="/about"
-            className="inline-flex items-center rounded-full bg-brand px-6 py-3 text-base font-semibold text-slate-900 shadow-lg shadow-cyan-500/30 transition hover:bg-brand/90"
+            className="inline-flex items-center rounded-full bg-brand px-6 py-3 text-base font-semibold text-white shadow-lg shadow-cyan-500/30 transition hover:bg-brand/90"
             aria-describedby={ctaDescriptionId}
           >
             Learn More
@@ -74,7 +74,7 @@ const Home = () => (
             aria-label="Luminous Three.js cube rendered with high contrast lighting."
           />
         </Suspense>
-        <figcaption id={sceneDescriptionId} className="text-sm text-slate-300">
+        <figcaption id={sceneDescriptionId} className="text-sm text-slate-600 dark:text-slate-300">
           A holographic cyan cube with magenta rim lighting rotates over a deep navy gradient so it
           remains distinguishable even for users with low contrast sensitivity.
         </figcaption>
