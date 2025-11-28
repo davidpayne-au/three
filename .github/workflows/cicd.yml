@@ -17,7 +17,6 @@ permissions:
   contents: read
 jobs:
   build:
-    # if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     env:
       # When deploying to GitHub Pages for a project site, the base path
@@ -65,6 +64,7 @@ jobs:
         run: echo "✅ Build and tests completed successfully" | tee -a $GITHUB_STEP_SUMMARY
       
   deploy:
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/trunk'
     env:
       PAUSE_BEFORE_E2E: ${{ vars.PAUSE_BEFORE_E2E || 'false' }}
       PAUSE_BEFORE_E2E_SECONDS: ${{ vars.PAUSE_BEFORE_E2E_SECONDS || '0' }}
