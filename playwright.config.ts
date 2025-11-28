@@ -1,5 +1,9 @@
 import { defineConfig, devices } from '@playwright/test';
-const baseURL = process.env.BASE_URL || 'http://localhost:5173';
+
+// Ensure baseURL doesn't have a trailing slash to avoid double slashes in tests
+const rawBaseURL = process.env.BASE_URL || 'http://localhost:5173';
+const baseURL = rawBaseURL.endsWith('/') ? rawBaseURL.slice(0, -1) : rawBaseURL;
+
 export default defineConfig({
   testDir: './e2e',
   fullyParallel: true,
