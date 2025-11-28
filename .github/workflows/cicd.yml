@@ -62,18 +62,11 @@ jobs:
         uses:  actions/upload-pages-artifact@v4
         with:
           path: ${{ github.workspace }}/dist/
-      - name: deploy pages artifact
-        id: deploy-pages-artifact
-        uses: actions/deploy-pages@v4
-      - name: show deployed url
-        run: |
-          # show deployed URL for github pages
-          DEPLOYED_URL="${{ steps.deploy-pages-artifact.outputs.page_url }}"
-          echo "## 🚀 Deployment Successful" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "📚 **Live Preview:** [$DEPLOYED_URL]($DEPLOYED_URL)" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "✅ Build, test, and deployment completed successfully!" >> $GITHUB_STEP_SUMMARY
+
+      - name: 📣 Build and tests completed successfully
+        run: echo "✅ Build and tests completed successfully" | tee -a $GITHUB_STEP_SUMMARY
+
+      
   deploy:
     environment:
       name: github-pages
@@ -84,6 +77,16 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: 📣 Show deployed url
+        run: |
+          # show deployed URL for github pages
+          DEPLOYED_URL="${{ steps.deployment.outputs.page_url }}"
+          echo "## 🚀 Deployment Successful" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📚 **Live Preview:** [$DEPLOYED_URL]($DEPLOYED_URL)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Build, test, and deployment completed successfully!" >> $GITHUB_STEP_SUMMARY
 
     # run e2e tests using playwright
     # - name: Install Playwright Browsers
