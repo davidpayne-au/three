@@ -39,8 +39,6 @@ jobs:
         run: npm run build
       - name: 🧪 Test
         run: npm run test
-      - name: 📣 Update
-        run: echo "✅ npm ci, test and build completed" | tee -a $GITHUB_STEP_SUMMARY
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
@@ -65,7 +63,6 @@ jobs:
 
       - name: 📣 Build and tests completed successfully
         run: echo "✅ Build and tests completed successfully" | tee -a $GITHUB_STEP_SUMMARY
-
       
   deploy:
     environment:
@@ -85,8 +82,6 @@ jobs:
           echo "## 🚀 Deployment Successful" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "📚 **Live Preview:** [$DEPLOYED_URL]($DEPLOYED_URL)" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "✅ Build, test, and deployment completed successfully!" >> $GITHUB_STEP_SUMMARY
 
     # run e2e tests using playwright
     # - name: Install Playwright Browsers
