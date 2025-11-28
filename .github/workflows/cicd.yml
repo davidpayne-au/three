@@ -65,6 +65,10 @@ jobs:
         run: echo "✅ Build and tests completed successfully" | tee -a $GITHUB_STEP_SUMMARY
       
   deploy:
+    env:
+      PAUSE_BEFORE_E2E: ${{ vars.PAUSE_BEFORE_E2E || 'false' }}
+      PAUSE_BEFORE_E2E_SECONDS: ${{ vars.PAUSE_BEFORE_E2E_SECONDS || '0' }}
+      
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -83,25 +87,25 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "📚 **Live Preview:** [$DEPLOYED_URL]($DEPLOYED_URL)" >> $GITHUB_STEP_SUMMARY
 
-    # run e2e tests using playwright
-    # - name: Install Playwright Browsers
-    #   run: npx playwright install --with-deps
-    # - name: Run e2e tests
-    #   run: |
-    #     echo "📣 PVT: Running e2e tests against deployed pages at ${{ steps.deployment.outputs.page_url }}" | tee -a $GITHUB_STEP_SUMMARY
-    #     if [ "${{ env.PAUSE_BEFORE_E2E }}" = "true" ]; then
-    #       echo "⏳ Waiting for ${{ env.PAUSE_BEFORE_E2E_SECONDS }} seconds before running e2e tests" | tee -a $GITHUB_STEP_SUMMARY
-    #       sleep ${{ env.PAUSE_BEFORE_E2E_SECONDS }}
-    #     fi
-    #     echo "🧪 Running e2e tests" | tee -a $GITHUB_STEP_SUMMARY
-    #     npm run test:e2e
-    #   env:
-    #     BASE_URL: ${{ steps.deployment.outputs.page_url }} # set the base URL for the e2e tests
+      # run e2e tests using playwright
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: 🎭 Run PVT e2e tests against the deployed pages
+        run: |
+          echo "📣 PVT: Running e2e tests against deployed pages at $BASE_URL" | tee -a $GITHUB_STEP_SUMMARY
+          if [ "${{ env.PAUSE_BEFORE_E2E }}" = "true" ]; then
+            echo "⏳ Waiting for ${{ env.PAUSE_BEFORE_E2E_SECONDS }} seconds before running e2e tests" | tee -a $GITHUB_STEP_SUMMARY
+            sleep ${{ env.PAUSE_BEFORE_E2E_SECONDS }}
+          fi
+          echo "🧪 Running PVT e2e tests" | tee -a $GITHUB_STEP_SUMMARY
+          npm run test:e2e
+        env:
+          BASE_URL: ${{ steps.deployment.outputs.page_url }}
 
-    # - name: Upload screenshots as artifact
-    #   if: github.event_name == 'pull_request' || github.event_name == 'push'
-    #   uses: actions/upload-artifact@v4.6.2
-    #   with:
-    #     name: screenshots
-    #     path: test-results/screenshots/*.png
-    #     if-no-files-found: ignore
+      - name: Upload screenshots as artifact
+        if: github.event_name == 'pull_request' || github.event_name == 'push'
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: screenshots
+          path: test-results/screenshots/*.png
+          if-no-files-found: ignore
