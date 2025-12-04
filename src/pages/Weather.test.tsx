@@ -5,7 +5,7 @@ import { ThemeProvider } from '../contexts/ThemeContext'
 import { Weather } from './Weather'
 
 // Mock fetch globally
-global.fetch = vi.fn()
+globalThis.fetch = vi.fn()
 
 describe('Weather page', () => {
   beforeEach(() => {
@@ -73,7 +73,7 @@ describe('Weather page', () => {
       },
     }
 
-    ;(global.fetch as ReturnType<typeof vi.fn>)
+    ;(globalThis.fetch as ReturnType<typeof vi.fn>)
       .mockResolvedValueOnce({
         ok: true,
         json: async () => geoResponse,
@@ -108,7 +108,7 @@ describe('Weather page', () => {
     const user = userEvent.setup()
 
     // Mock geocoding response with no results
-    ;(global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+    ;(globalThis.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       ok: true,
       json: async () => ({ results: [] }),
     } as Response)
@@ -137,7 +137,7 @@ describe('Weather page', () => {
     const user = userEvent.setup()
 
     // Mock failed fetch
-    ;(global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+    ;(globalThis.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
       ok: false,
     } as Response)
 

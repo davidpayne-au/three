@@ -205,7 +205,8 @@ const Weather = () => {
               <div className="rounded-2xl border border-slate-200 bg-white/60 p-4 dark:border-white/10 dark:bg-slate-900/60">
                 <p className="font-semibold text-slate-900 dark:text-white">Coordinates</p>
                 <p>
-                  {weatherData.latitude.toFixed(4)}°N, {weatherData.longitude.toFixed(4)}°E
+                  {Math.abs(weatherData.latitude).toFixed(4)}°{weatherData.latitude >= 0 ? 'N' : 'S'},{' '}
+                  {Math.abs(weatherData.longitude).toFixed(4)}°{weatherData.longitude >= 0 ? 'E' : 'W'}
                 </p>
               </div>
               <div className="rounded-2xl border border-slate-200 bg-white/60 p-4 dark:border-white/10 dark:bg-slate-900/60">
