@@ -4,6 +4,7 @@ import { ThemeToggle } from './components/ThemeToggle'
 
 const Home = lazy(() => import('./pages/Home').then(({ Home }) => ({ default: Home })))
 const About = lazy(() => import('./pages/About').then(({ About }) => ({ default: About })))
+const Weather = lazy(() => import('./pages/Weather').then(({ Weather }) => ({ default: Weather })))
 
 const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
   [
@@ -51,6 +52,9 @@ const App = () => {
             <NavLink to="/about" className={navLinkClasses}>
               About
             </NavLink>
+            <NavLink to="/weather" className={navLinkClasses}>
+              Weather
+            </NavLink>
           </nav>
           <ThemeToggle />
         </div>
@@ -75,6 +79,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
+              <Route path="/weather" element={<Weather />} />
             </Routes>
           </Suspense>
         </main>
