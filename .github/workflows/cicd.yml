@@ -17,7 +17,7 @@ permissions:
   contents: read
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     env:
       # When deploying to GitHub Pages for a project site, the base path
       # should be /<repo-name>/. We set VITE_BASE so the Vite build uses
@@ -72,7 +72,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     needs: build
     steps:
       - uses: actions/checkout@v6
@@ -116,3 +116,4 @@ jobs:
           name: screenshots
           path: test-results/screenshots/*.png
           if-no-files-found: ignore
+          retention-days: 5
