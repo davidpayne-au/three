@@ -5,11 +5,15 @@ on:
     branches:
       - main
       - trunk
+    paths-ignore:
+      - 'readme.md'
   pull_request:
     types: [opened, synchronize, reopened]
     branches:
       - main
       - trunk
+    paths-ignore:
+      - 'readme.md'
 # we need these permissions to deploy the template to github pages
 permissions:
   id-token: write
