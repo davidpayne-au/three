@@ -2,6 +2,8 @@
 
 [![CI/CD](https://github.com/davidpayne-au/three/actions/workflows/cicd.yml/badge.svg)](https://github.com/davidpayne-au/three/actions/workflows/cicd.yml)
 
+[Pages Site](https://davidpayne-au.github.io/three/)
+
 A minimal React + TypeScript + Vite app that demonstrates a custom Three.js scene, Tailwind CSS styling, Vitest-powered tests, and a hash-based router so navigation works on any static host.
 
 ## Getting Started
