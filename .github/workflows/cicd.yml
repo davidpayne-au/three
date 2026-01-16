@@ -1,6 +1,7 @@
 # build the solution and test
 name: CI/CD
 on:
+  workflow_dispatch: 
   push:
     branches:
       - main
