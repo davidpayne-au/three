@@ -4,7 +4,7 @@ import { vi } from 'vitest'
 import { ThemeProvider } from '../contexts/ThemeContext'
 import { ThemeToggle } from './ThemeToggle'
 
-const renderWithTheme = (initialTheme: 'light' | 'dark' = 'light') => {
+const renderWithTheme = (initialTheme: 'light' | 'dark' | 'cheerful' = 'light') => {
   // Mock localStorage to control initial theme
   const mockLocalStorage = {
     getItem: vi.fn(() => initialTheme),
@@ -40,8 +40,8 @@ describe('ThemeToggle', () => {
     // Click to toggle to dark mode
     await user.click(screen.getByRole('button', { name: /switch to dark theme/i }))
 
-    // Dark mode should show sun (for switching to light)
-    expect(screen.getByRole('button', { name: /switch to light theme/i })).toBeInTheDocument()
+    // Dark mode should show sparkles (for switching to cheerful)
+    expect(screen.getByRole('button', { name: /switch to cheerful theme/i })).toBeInTheDocument()
   })
 
   it('is keyboard accessible', async () => {
@@ -56,7 +56,7 @@ describe('ThemeToggle', () => {
 
     // Press Enter to activate
     await user.keyboard('{Enter}')
-    expect(screen.getByRole('button', { name: /switch to light theme/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /switch to cheerful theme/i })).toBeInTheDocument()
   })
 
   it('has sufficient color contrast in light mode', () => {
@@ -77,7 +77,7 @@ describe('ThemeToggle', () => {
     // Toggle to dark mode
     await user.click(screen.getByRole('button', { name: /switch to dark theme/i }))
 
-    const button = screen.getByRole('button', { name: /switch to light theme/i })
+    const button = screen.getByRole('button', { name: /switch to cheerful theme/i })
 
     // Check that it has appropriate dark mode classes
     expect(button).toHaveClass('dark:border-white/10', 'dark:bg-white/5', 'dark:text-slate-400')
@@ -103,10 +103,50 @@ describe('ThemeToggle', () => {
 
     // Click to toggle to dark
     await user.click(button)
+    expect(screen.getByRole('button', { name: /switch to cheerful theme/i })).toBeInTheDocument()
+
+    // Click again to toggle to cheerful
+    await user.click(screen.getByRole('button', { name: /switch to cheerful theme/i }))
     expect(screen.getByRole('button', { name: /switch to light theme/i })).toBeInTheDocument()
 
-    // Click again to toggle back to light
+    // Click once more to toggle back to light
     await user.click(screen.getByRole('button', { name: /switch to light theme/i }))
     expect(screen.getByRole('button', { name: /switch to dark theme/i })).toBeInTheDocument()
+  })
+
+  it('cycles through all three themes in order: light -> dark -> cheerful -> light', async () => {
+    const user = userEvent.setup()
+    renderWithTheme('light')
+
+    // Start in light mode
+    expect(screen.getByRole('button', { name: /switch to dark theme/i })).toBeInTheDocument()
+
+    // Click to go to dark
+    await user.click(screen.getByRole('button', { name: /switch to dark theme/i }))
+    expect(screen.getByRole('button', { name: /switch to cheerful theme/i })).toBeInTheDocument()
+
+    // Click to go to cheerful
+    await user.click(screen.getByRole('button', { name: /switch to cheerful theme/i }))
+    expect(screen.getByRole('button', { name: /switch to light theme/i })).toBeInTheDocument()
+
+    // Click to go back to light
+    await user.click(screen.getByRole('button', { name: /switch to light theme/i }))
+    expect(screen.getByRole('button', { name: /switch to dark theme/i })).toBeInTheDocument()
+  })
+
+  it('has cheerful theme styling', async () => {
+    const user = userEvent.setup()
+    renderWithTheme('dark')
+
+    // Toggle from dark to cheerful
+    await user.click(screen.getByRole('button', { name: /switch to cheerful theme/i }))
+
+    const button = screen.getByRole('button', { name: /switch to light theme/i })
+
+    // Check that it has cheerful mode classes
+    expect(button).toHaveClass('cheerful:border-purple-400/50')
+    expect(button).toHaveClass('cheerful:bg-gradient-to-br')
+    expect(button).toHaveClass('cheerful:from-pink-300', 'cheerful:to-purple-300')
+    expect(button).toHaveClass('cheerful:text-purple-900')
   })
 })

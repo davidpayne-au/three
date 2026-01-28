@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState, type ReactNode } from 'react'
 
-type Theme = 'light' | 'dark'
+type Theme = 'light' | 'dark' | 'cheerful'
 
 interface ThemeContextType {
   theme: Theme
@@ -35,7 +35,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
       const root = window.document.documentElement
 
       // Remove previous theme classes
-      root.classList.remove('light', 'dark')
+      root.classList.remove('light', 'dark', 'cheerful')
 
       // Add current theme class
       root.classList.add(theme)
@@ -51,7 +51,11 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   }, [theme])
 
   const toggleTheme = () => {
-    setTheme(prevTheme => prevTheme === 'light' ? 'dark' : 'light')
+    setTheme(prevTheme => {
+      if (prevTheme === 'light') return 'dark'
+      if (prevTheme === 'dark') return 'cheerful'
+      return 'light'
+    })
   }
 
   return (

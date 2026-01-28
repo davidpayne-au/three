@@ -10,8 +10,8 @@ const navLinkClasses = ({ isActive }: { isActive: boolean }) =>
   [
     'rounded-full px-4 py-1.5 text-sm font-semibold transition-colors',
     isActive
-      ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900'
-      : 'text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white',
+      ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 cheerful:bg-gradient-to-r cheerful:from-pink-500 cheerful:to-purple-600 cheerful:text-white'
+      : 'text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white cheerful:text-purple-700 cheerful:hover:text-purple-900',
   ].join(' ')
 
 const App = () => {
@@ -26,25 +26,25 @@ const App = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100">
+    <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100 cheerful:bg-amber-50 cheerful:text-purple-900">
       <a className="skip-link" href="#main-content" onClick={handleSkipToContent}>
         Skip to main content
       </a>
       <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-4 py-8 sm:px-8">
-        <header className="mb-10 flex flex-wrap items-center justify-between gap-6 border-b border-slate-200 pb-6 dark:border-white/5">
+        <header className="mb-10 flex flex-wrap items-center justify-between gap-6 border-b border-slate-200 pb-6 dark:border-white/5 cheerful:border-purple-300">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500 dark:text-slate-500">
+          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500 dark:text-slate-500 cheerful:text-purple-600">
             Three Demo
           </p>
           <h1 className="text-3xl font-bold">ThreeJS Explorer</h1>
-          <p className="text-sm text-slate-600 dark:text-slate-400">
+          <p className="text-sm text-slate-600 dark:text-slate-400 cheerful:text-purple-700">
             React + Vite + Tailwind with a hash-based router for static hosting.
           </p>
         </div>
         <div className="flex items-center gap-4">
           <nav
             aria-label="Primary navigation"
-            className="flex gap-2 rounded-full border border-slate-200 bg-slate-50 p-1 backdrop-blur dark:border-white/10 dark:bg-white/5"
+            className="flex gap-2 rounded-full border border-slate-200 bg-slate-50 p-1 backdrop-blur dark:border-white/10 dark:bg-white/5 cheerful:border-purple-300 cheerful:bg-gradient-to-r cheerful:from-pink-100 cheerful:to-purple-100"
           >
             <NavLink to="/" end className={navLinkClasses}>
               Home
@@ -70,7 +70,7 @@ const App = () => {
               <div
                 role="status"
                 aria-live="polite"
-                className="flex min-h-[40vh] items-center justify-center rounded-3xl border border-slate-200 bg-slate-50 text-sm text-slate-700 dark:border-white/10 dark:bg-white/5 dark:text-slate-200"
+                className="flex min-h-[40vh] items-center justify-center rounded-3xl border border-slate-200 bg-slate-50 text-sm text-slate-700 dark:border-white/10 dark:bg-white/5 dark:text-slate-200 cheerful:border-purple-300 cheerful:bg-gradient-to-br cheerful:from-pink-50 cheerful:to-purple-50 cheerful:text-purple-800"
               >
                 Loading section…
               </div>
@@ -84,7 +84,7 @@ const App = () => {
           </Suspense>
         </main>
 
-        <footer className="mt-12 text-center text-xs text-slate-500 dark:text-slate-500">
+        <footer className="mt-12 text-center text-xs text-slate-500 dark:text-slate-500 cheerful:text-purple-600">
           Built with React 19, Vite, Tailwind, and Three.js.
         </footer>
       </div>
